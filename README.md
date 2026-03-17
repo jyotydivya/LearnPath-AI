@@ -127,26 +127,3 @@ Generate a learning path for a given topic.
 ```
 
 ---
-
-## 🐛 Troubleshooting
-
-| Problem | Fix |
-|---|---|
-| **401 / 403 errors** | Verify your `GOOGLE_API_KEY` is valid and has quota remaining |
-| **500 — "Failed to generate"** | Check the terminal/console for the full exception traceback |
-| **Changed `.env` but nothing changed** | Restart the Flask server so the new env vars are loaded |
-| **Module not found errors** | Make sure your virtual environment is activated before installing |
-
----
-
-## 📝 Notes
-
-- The app runs with `debug=True` — **do not use this in production**.
-- Model used: **`gemini-1.5-flash`** (configurable in `app.py`).
-- The `requirements.txt` contains pinned transitive dependencies for full reproducibility.
-
----
-
-## 📄 License
-
-This project is open-source. Feel free to use, modify, and distribute.
