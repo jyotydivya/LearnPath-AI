@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized AI Learning Path Generator</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 2em; }
+        .container { max-width: 800px; margin: auto; }
+        #result { white-space: pre-wrap; background-color: #f4f4f4; padding: 1em; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Personalized AI Learning Path Generator</h1>
+        <p>Enter a topic you want to learn, and our AI will create a customized learning path for you.</p>
+
+        <form id="learningForm">
+            <input type="text" id="topicInput" placeholder="e.g., Quantum Computing" size="50" required>
+            <button type="submit">Generate Path</button>
+        </form>
+
+        <h2>Your Learning Path:</h2>
+        <div id="result">
+            <p>Your learning path will appear here...</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('learningForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const topic = document.getElementById('topicInput').value;
+            const resultDiv = document.getElementById('result');
+
+            resultDiv.innerHTML = '<p>Generating your learning path... Please wait.</p>';
+
+            try {
+                const response = await fetch('/generate-path', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ topic: topic })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+
+                if (data.error) {
+                    resultDiv.innerText = data.error;
+                } else {
+                    resultDiv.innerText = data.learning_path;
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerText = 'An error occurred while fetching the learning path.';
+            }
+        });
+    </script>
+</body>
+</html>
